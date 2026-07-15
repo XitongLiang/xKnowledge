@@ -191,15 +191,21 @@ paper says. A skill tells an agent how to act.
 
 ### 10. Deterministic Maintenance Tools
 
-Improve `.tools/` with checks that do not require an LLM:
+Implemented in `.tools/lint.py`:
 
-- broken wikilinks
+- frontmatter schema and lifecycle validation
+- raw-source and body-citation path validation
+- section-level source citation coverage
+- duplicate page ID and alias detection
+- unresolved and ambiguous wikilinks
+- topic location, child-level, and root L0 index validation
+
+Continue improving `.tools/` with checks that do not require an LLM:
+
 - orphan pages
-- raw-source coverage
 - log coverage
 - duplicate source candidates
 - stale pages
-- topic depth violations
 - language-policy violations
 - private-file leakage before open-source commits
 
