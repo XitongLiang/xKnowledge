@@ -41,8 +41,8 @@ _schema/   Operating rules: workflows, page conventions, citation style.
   future work, and related-work position in English.
 - `_schema` defines the rules that keep the wiki consistent across sessions.
 - Useful answers should be saved back into the wiki when they create durable value.
-- Run deterministic health checks before heavier maintenance when the structure
-  may have drifted.
+- Run deterministic health and lint checks after broad maintenance when the
+  structure or page content may have drifted.
 - The wiki should be periodically linted for stale claims, missing links,
   contradictions, orphan pages, and open research questions.
 
@@ -79,7 +79,8 @@ Expected behavior:
 - Create or update relevant concept, entity, topic, question, or synthesis pages.
 - Cite `_raw/` paths for factual claims.
 - Update `_wiki/log.md`.
-- Run `python3 .tools/health.py` when structural changes are meaningful.
+- Run `python3 .tools/health.py` and `python3 .tools/lint.py` when changes are
+  meaningful.
 
 ### Curated Ingest
 
@@ -154,6 +155,20 @@ python3 .tools/health.py
 The health check reports pending inbox files, stub pages, broken wikilinks,
 index sync problems, log coverage, and raw-source coverage.
 
+### Lint Check
+
+Use this after source-page edits, broad ingest, or taxonomy changes.
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 .tools/lint.py
+```
+
+Lint parses YAML and Markdown, then checks page schema, citation coverage, raw
+references, duplicate identities and aliases, wikilinks, and L0/L1/L2 topic
+rules. Use `--json` for automation or `--fix-status` to conservatively mark
+failing active pages as `needs-review`.
+
 ### Convert Hard-To-Read Sources
 
 Use this when a source is hard to inspect directly.
@@ -169,10 +184,13 @@ of provenance unless the schema says otherwise.
 
 ```bash
 python3 .tools/health.py
+python3 .tools/lint.py
 python3 .tools/file_to_md.py path/to/source.pdf
 ```
 
 `health.py` performs deterministic structural checks with no LLM calls.
+`lint.py` performs deterministic YAML, Markdown, citation, identity, link, and
+taxonomy checks with no LLM calls.
 `file_to_md.py` optionally converts rich source formats into markdown companions
 for easier ingest.
 

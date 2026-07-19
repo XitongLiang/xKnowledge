@@ -46,6 +46,8 @@ and preserving useful analysis.
   value.
 - Run `python3 .tools/health.py` before broad maintenance or semantic linting when
   the wiki structure may have drifted.
+- Run `python3 .tools/lint.py` after broad content edits to validate page schema,
+  citations, raw references, identities, wikilinks, and topic-layer rules.
 - Use `python3 .tools/file_to_md.py` for optional conversion when source formats
   are hard to inspect directly; preserve the original source provenance.
 - Append every meaningful ingest, query filing, or maintenance pass to
@@ -69,6 +71,7 @@ and preserving useful analysis.
 3. Add citations for new factual claims.
 4. Record the operation in `_wiki/log.md`.
 5. Note open questions or contradictions when they appear.
+6. Run `python3 .tools/health.py` and `python3 .tools/lint.py` after broad edits.
 
 ## Naming
 
